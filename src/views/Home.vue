@@ -1,18 +1,22 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <car-component v-for="car in cars" v-bind:car="car" v-bind:key="car.id"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import CarComponent from '@/components/CarComponent.vue'
+
+import { mapState } from 'vuex';
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
-  }
+    CarComponent,
+  },
+  computed: mapState([
+    'cars'
+  ]),
 }
 </script>
