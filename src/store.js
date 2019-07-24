@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash';
+import { uuid } from 'vue-uuid';
 
 Vue.use(Vuex)
 
@@ -60,16 +61,35 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    addSponsor (state, payload) {
-      state.sponsors = [
+    addCar (state, payload) {
+      payload.id = uuid.v1();
+
+      state.cars = [
+        ...state.cars,
         payload,
-        ...state.sponsors
+      ];
+    },
+    addSponsor (state, payload) {
+      payload.id = uuid.v1();
+
+      state.sponsors = [
+        ...state.sponsors,
+        payload,
       ];
     },
     deleteSponsor (state, id) {
       state.sponsors = _.remove(state.sponsors, function(sponsor){
         return sponsor.id !== id;
       });
+    },
+    addOwner (state, payload) {
+      payload.id = uuid.v1();
+      
+      state.owners = [
+        ...state.owners,
+        payload,
+      ];
+      return true;
     },
     deleteOwner (state, id) {
       state.owners = _.remove(state.owners, function(owner){
@@ -78,13 +98,22 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    addCar ({ commit }, payload) {
+      return new Promise((resolve) => {
+        commit('addCar', payload)
+        resolve();
+      })
+    },
     addSponsor ({ commit }, payload) {
-      return new Promise((resolve, reject) => {
-        if( commit('addSponsor', payload) ) {
-          resolve();
-        } else {
-          reject();
-        }
+      return new Promise((resolve) => {
+        commit('addSponsor', payload);
+        resolve();
+      })
+    },
+    addOwner ({ commit }, payload) {
+      return new Promise((resolve) => {
+        commit('addOwner', payload);
+        resolve();
       })
     },
     deleteSponsor ({ commit }, id) {

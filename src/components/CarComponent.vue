@@ -4,21 +4,14 @@
     <h2>Sponsors</h2>
     <sponsors-component v-bind:sponsors="sponsors" v-bind:car-id="car.id"/>
     <h2>Owner</h2>
-    <div v-if="owner">
-      <p>
-        <strong>{{ owner.name }}</strong> — {{ owner.site }} — ${{ owner.bid }}<br />
-        <button @click="deleteOwner(owner.id)">Delete</button>
-      </p>
-    </div>
-    <div v-else>
-      <em>No Owner</em>
-    </div>
+    <owner-component v-bind:owner="owner" v-bind:car-id="car.id"/>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import SponsorsComponent from '@/components/SponsorsComponent';
+import OwnerComponent from '@/components/OwnerComponent';
 
 export default {
   name: 'CarComponent',
@@ -44,7 +37,8 @@ export default {
     }
   },
   components: {
-    SponsorsComponent
+    SponsorsComponent,
+    OwnerComponent,
   }
 }
 </script>

@@ -4,9 +4,11 @@
       <strong>{{ sponsor.name }}</strong> — {{ sponsor.site }}<br />
       <button @click="deleteSponsor(sponsor.id)">Delete</button>
     </p>
-    <input type="text" v-model="name" placeholder="Name"><br />
-    <input type="text" v-model="site" placeholder="Site"><br />
-    <button @click="addSponsor">Add</button>
+    <form @submit="addSponsor">
+      <input required type="text" v-model="name" placeholder="Name"><br />
+      <input required type="text" v-model="site" placeholder="Site"><br />
+      <button type="submit">Add</button>
+    </form>
   </div>
 </template>
 
@@ -26,17 +28,15 @@ export default {
     }
   },
   methods: {
-    addSponsor: function() {
+    addSponsor: function(e) {
+      e.preventDefault();
       this.$store.dispatch('addSponsor', {
-        id: this.$uuid.v1(),
         carId: this.carId,
         name: this.name,
         site: this.site
       }).then(() => {
         this.name = '';
         this.site = '';
-      }, () => {
-        // error
       });
     },
     ...mapActions([
