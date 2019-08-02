@@ -4,7 +4,7 @@
       <strong>{{ sponsor.name }}</strong> — {{ sponsor.site }}<br />
       <button @click="deleteSponsor(sponsor.id)">Delete</button>
     </p>
-    <form @submit="addSponsor">
+    <form @submit.prevent="addSponsor">
       <input required type="text" v-model="name" placeholder="Name"><br />
       <input required type="text" v-model="site" placeholder="Site"><br />
       <button type="submit">Add</button>
@@ -28,8 +28,7 @@ export default {
     }
   },
   methods: {
-    addSponsor: function(e) {
-      e.preventDefault();
+    addSponsor: function() {
       this.$store.dispatch('addSponsor', {
         carId: this.carId,
         name: this.name,

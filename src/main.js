@@ -5,6 +5,11 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+Vue.filter('money', function (val) {
+  if (!val) return '$0.00'
+  return '$' + parseFloat(val).toFixed(2)
+})
+
 new Vue({
   router,
   store,

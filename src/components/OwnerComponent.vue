@@ -9,7 +9,7 @@
     <div v-else>
       <em>No Owner</em>
     </div>
-    <form @submit="addOwner">
+    <form @submit.prevent="addOwner">
       <input required type="text" v-model="name" placeholder="Name"> 
       <input required type="text" v-model="site" placeholder="Site"> 
       <input required type="number" v-model.number="bid" placeholder="Bid" v-bind:min="minimumBid"><br />
@@ -31,13 +31,12 @@ export default {
     return {
       name: '',
       site: '',
-      bid: null,
+      bid: this.owner ? this.owner.bid + 1 : this.$store.state.settings.minimumBid,
     }
   },
   methods: {
-    addOwner: function(e) {
-      e.preventDefault();
-      if( this.bid <= this.owner.bid ) {
+    addOwner: function() {
+      if( this.bid < this.minimumBid ) {
         alert('Bid must be higher');
         return;
       }
@@ -49,7 +48,7 @@ export default {
       }).then(() => {
         this.name = '';
         this.site = '';
-        this.bid = null;
+        this.bid = this.owner.bid + 1;
       });
     },
     ...mapActions([
@@ -61,7 +60,7 @@ export default {
       if( this.owner ) {
         return this.owner.bid + 1;
       }
-      return 1;
+      return this.$store.state.settings.minimumBid;
     }
   }
 }
