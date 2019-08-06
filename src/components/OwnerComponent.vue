@@ -1,21 +1,35 @@
 <template>
-  <div>
-    <div v-if="owner">
-      <p>
-        <strong>{{ owner.name }}</strong> — {{ owner.site }} — ${{ owner.bid }}<br />
-        <button @click="deleteOwner(owner.id)">Delete</button>
-      </p>
-    </div>
-    <div v-else>
-      <em>No Owner</em>
-    </div>
-    <form @submit.prevent="addOwner">
-      <input required type="text" v-model="name" placeholder="Name"> 
-      <input required type="text" v-model="site" placeholder="Site"> 
-      <input required type="number" v-model.number="bid" placeholder="Bid" v-bind:min="minimumBid"><br />
-      <button type="submit">Add Owner</button>
-    </form>
-  </div>
+  <v-card class="mb-4" elevation="1">
+    <v-card-title class="subtitle-1 grey lighten-4 mb-2">Top Bid</v-card-title>
+    <v-card-text>
+      <div v-if="owner">
+        <v-container>
+          <v-layout align-center>
+            <v-flex shrink>
+              <v-btn small icon color="red" @click="deleteOwner(owner.id)">
+                <v-icon>remove_circle</v-icon>
+              </v-btn>
+            </v-flex>
+            <v-flex>
+              <p class="subtitle-1 mb-1">
+                {{ owner.name }}
+              </p>
+              <div class="d-flex">
+                <span><span class='text--primary'>Bid:</span> {{ owner.bid | money }}</span>
+                <v-spacer />
+                <span><span class='text--primary'>Site:</span> {{ owner.site }}</span>
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </div>
+      <div v-else>
+        <p>
+          <em>No Owner</em>
+        </p>
+      </div>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>

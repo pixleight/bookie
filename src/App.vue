@@ -1,31 +1,89 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/settings">Settings</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-navigation-drawer
+      v-model="drawer"
+      :clipped="$vuetify.breakpoint.lgAndUp"
+      app
+    >
+      <v-list shaped>
+        <v-list-item-group v-model="nav.item" color="primary">
+
+          <v-list-item v-for="(item, i) in nav.items" :key="i" :to="item.link">
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-html="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar
+      app
+      :clipped-left="$vuetify.breakpoint.lgAndUp"
+      color="indigo"
+      dark
+    >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>Application</v-toolbar-title>
+      <v-spacer />
+      <v-toolbar-items>
+        <v-btn text tag="div"><strong>Shriners:</strong> {{ getCut('charity') | money }}</v-btn>
+        <v-btn text tag="div"><strong>Winning Owner:</strong> {{ getCut('owner') | money }}</v-btn>
+        <v-btn text tag="div"><strong>Total:</strong> {{ getTotalPot | money }}</v-btn>
+      </v-toolbar-items>
+    </v-app-bar>
+
+    <v-content>
+      <v-container
+        fluid
+        grid-list-xl
+      >
+        <router-view/>
+      </v-container>
+    </v-content>
+    <v-footer
+      color="indigo"
+      app
+    >
+      <span class="white--text">&copy; 2019</span>
+    </v-footer>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script>
+import { mapGetters } from 'vuex';
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+export default {
+  name: 'App',
+  components: {
+  },
+  data: () => ({
+    drawer: null,
+    nav: {
+      item: 0,
+      items: [
+        {
+          title: 'Home',
+          icon: 'home',
+          link: '/',
+        },
+        {
+          title: 'Settings',
+          icon: 'settings',
+          link: 'settings',
+        }
+      ]
+    }
+  }),
+  computed: {
+    ...mapGetters([
+      'getTotalPot',
+      'getCut',
+    ]),
+  }
+};
+</script>

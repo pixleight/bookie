@@ -1,21 +1,33 @@
 <template>
-  <div>
-    <h1>{{ car.name }}</h1>
-    <p><strong>Top Bid:</strong> {{ topBid | money }}</p>
-    <p>
-      <strong>Sponsor Cut:</strong> {{ sponsorCut | money }}
-    </p>
-    <h2>Sponsors</h2>
-    <sponsors-component v-bind:sponsors="sponsors" v-bind:car-id="car.id"/>
-    <h2>Owner</h2>
-    <owner-component v-bind:owner="owner" v-bind:car-id="car.id"/>
-  </div>
+  <v-flex xs4>
+    <v-card>
+      <v-card-title class="headline red darken-4 white--text">
+        <div>{{ car.name }}</div>
+        <v-list-item-subtitle>Sponsor Cut: {{ sponsorCut | money }}</v-list-item-subtitle>
+      </v-card-title>
+      <v-card-actions>
+        <v-spacer />
+        <sponsors-form :car="car" />
+        <owner-form :car="car" :owner="owner" />
+      </v-card-actions>
+      <v-card-text>
+        <owner-component v-bind:owner="owner" v-bind:car-id="car.id"/>
+        
+              <sponsors-list v-bind:sponsors="sponsors" v-bind:car-id="car.id"/>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </v-card-text>
+    </v-card>
+  </v-flex>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import SponsorsComponent from '@/components/SponsorsComponent';
+import SponsorsList from '@/components/SponsorsList';
+import SponsorsForm from '@/components/SponsorsForm';
 import OwnerComponent from '@/components/OwnerComponent';
+import OwnerForm from '@/components/OwnerForm';
 
 export default {
   name: 'CarComponent',
@@ -49,8 +61,10 @@ export default {
     }
   },
   components: {
-    SponsorsComponent,
+    SponsorsList,
+    SponsorsForm,
     OwnerComponent,
+    OwnerForm,
   }
 }
 </script>

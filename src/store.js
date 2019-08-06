@@ -10,41 +10,32 @@ export default new Vuex.Store({
     sponsorsPot: 0,
     cars: [
       {
-        id: 'c1',
-        name: 'Car 1',
-        topBid: 47,
-      },
-    ],
-    sponsors: [
-      {
-        id: 's1',
-        carId: 'c1',
-        name: 'Z Sponsor',
-        site: '56',
+        id: 'be289e3c',
+        name: 'Car 1'
       },
       {
-        id: 's2',
-        carId: 'c1',
-        name: 'A Sponsor',
-        site: '44',
-      }
-    ],
-    owners: [
-      {
-        id: 'o1',
-        carId: 'c1',
-        name: 'Owner 1',
-        site: '56',
-        bid: 20,
+        id: 'be28a0e4',
+        name: 'Car 2'
       },
       {
-        id: 'o2',
-        carId: 'c1',
-        name: 'Owner 1',
-        site: '56',
-        bid: 47,
-      }
+        id: 'be28a4fe',
+        name: 'Car 3'
+      },
+      {
+        id: 'be28a648',
+        name: 'Car 4'
+      },
+      {
+        id: 'be28a77e',
+        name: 'Car 5'
+      },
+      {
+        id: 'be28a8aa',
+        name: 'Car 6'
+      },
     ],
+    sponsors: [],
+    owners: [],
     settings: {
       sponsorship: 5,
       minimumBid: 5,
