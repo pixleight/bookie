@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexPersistence from 'vuex-persist';
 import _ from 'lodash';
 import { uuid } from 'vue-uuid';
 
@@ -162,5 +163,6 @@ export default new Vuex.Store({
       commit('saveSettings', payload);
       return Promise.resolve();
     }
-  }
+  },
+  plugins: [new VuexPersistence().plugin]
 })

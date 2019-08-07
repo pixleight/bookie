@@ -1,22 +1,5 @@
 <template>
   <v-layout wrap justify-space-around>
-    <v-flex xs12>
-      <v-card>
-        <p>
-          Total: {{ getTotalPot | money }}
-        </p>
-        <p>
-          Owner cut: {{ getCut('owner') | money }}
-        </p>
-        <p>
-          Charity cut: {{ getCut('charity') | money }}
-        </p>
-        <form @submit.prevent="addCar">
-          <input required type="text" v-model="carName" placeholder="Car name"><br>
-          <button type="submit">Add Car</button>
-        </form>
-      </v-card>
-    </v-flex>
     <car-component v-for="car in cars" v-bind:car="car" v-bind:key="car.id"/>
   </v-layout>
 </template>

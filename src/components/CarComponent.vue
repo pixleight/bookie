@@ -1,7 +1,7 @@
 <template>
   <v-flex xs4>
     <v-card>
-      <v-card-title class="headline red darken-4 white--text">
+      <v-card-title class="headline indigo white--text">
         <div>{{ car.name }}</div>
         <v-list-item-subtitle>Sponsor Cut: {{ sponsorCut | money }}</v-list-item-subtitle>
       </v-card-title>
@@ -12,11 +12,7 @@
       </v-card-actions>
       <v-card-text>
         <owner-component v-bind:owner="owner" v-bind:car-id="car.id"/>
-        
-              <sponsors-list v-bind:sponsors="sponsors" v-bind:car-id="car.id"/>
-            </v-expansion-panel-content>
-          </v-expansion-panel>
-        </v-expansion-panels>
+        <sponsors-list v-bind:sponsors="sponsors" v-bind:car-id="car.id"/>
       </v-card-text>
     </v-card>
   </v-flex>
@@ -30,7 +26,6 @@ import OwnerComponent from '@/components/OwnerComponent';
 import OwnerForm from '@/components/OwnerForm';
 
 export default {
-  name: 'CarComponent',
   props: {
     car: Object,
   },

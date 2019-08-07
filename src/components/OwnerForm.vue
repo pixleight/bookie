@@ -54,10 +54,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-
 export default {
-  name: 'OwnerComponent',
   props: {
     car: Object,
     carId: String,

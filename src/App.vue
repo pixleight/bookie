@@ -6,7 +6,7 @@
       app
     >
       <v-list shaped>
-        <v-list-item-group v-model="nav.item" color="primary">
+        <v-list-item-group v-model="nav.item" color="indigo">
 
           <v-list-item v-for="(item, i) in nav.items" :key="i" :to="item.link">
             <v-list-item-action>
@@ -24,11 +24,11 @@
     <v-app-bar
       app
       :clipped-left="$vuetify.breakpoint.lgAndUp"
-      color="indigo"
+      color="indigo darken-4"
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Katahdin 500</v-toolbar-title>
       <v-spacer />
       <v-toolbar-items>
         <v-btn text tag="div"><strong>Shriners:</strong> {{ getCut('charity') | money }}</v-btn>
@@ -46,7 +46,7 @@
       </v-container>
     </v-content>
     <v-footer
-      color="indigo"
+      color="indigo darken-4"
       app
     >
       <span class="white--text">&copy; 2019</span>
