@@ -33,7 +33,7 @@
                   type="number"
                   v-model.number="bid"
                   label="Bid"
-                  prepend-icon="attach_money"
+                  prepend="$"
                   :min="minimumBid"
                   :rules="bidRules"
                   required

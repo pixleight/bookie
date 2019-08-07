@@ -32,7 +32,9 @@
       <v-spacer />
       <v-toolbar-items>
         <v-btn text tag="div"><strong>Shriners:</strong> {{ getCut('charity') | money }}</v-btn>
+        <v-divider vertical />
         <v-btn text tag="div"><strong>Winning Owner:</strong> {{ getCut('owner') | money }}</v-btn>
+        <v-divider vertical />
         <v-btn text tag="div"><strong>Total:</strong> {{ getTotalPot | money }}</v-btn>
       </v-toolbar-items>
     </v-app-bar>
