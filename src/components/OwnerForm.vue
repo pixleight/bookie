@@ -33,7 +33,7 @@
                   type="number"
                   v-model.number="bid"
                   label="Bid"
-                  prepend="$"
+                  prefix="$"
                   :min="minimumBid"
                   :rules="bidRules"
                   required
@@ -54,6 +54,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   props: {
     car: Object,
@@ -82,6 +84,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setSnack']),
     addOwner: function() {
       if( this.bid < this.minimumBid ) {
         alert('Bid must be higher');
@@ -96,6 +99,8 @@ export default {
         this.$refs.form.reset();
         this.bid = this.owner.bid + 1;
         this.dialog = false;
+      }).then(() => {
+        this.setSnack(`Owner bid added for ${this.car.name}`);
       });
     },
     reset() {

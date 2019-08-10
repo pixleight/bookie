@@ -11,8 +11,8 @@
         <owner-form :car="car" :owner="owner" />
       </v-card-actions>
       <v-card-text>
-        <owner-component v-bind:owner="owner" v-bind:car-id="car.id"/>
-        <sponsors-list v-bind:sponsors="sponsors" v-bind:car-id="car.id"/>
+        <owner-component v-bind:owner="owner" v-bind:car-id="car.id" v-bind:car-name="car.name"/>
+        <sponsors-list v-bind:sponsors="sponsors" v-bind:car-id="car.id" v-bind:car-name="car.name"/>
       </v-card-text>
     </v-card>
   </v-flex>
@@ -31,7 +31,6 @@ export default {
   },
   methods: {
     ...mapActions([
-      'deleteSponsor',
       'deleteOwner',
     ]),
   },

@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   props: {
     car: Object,
@@ -64,6 +66,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setSnack']),
     addSponsor: function() {
       this.$store.dispatch('addSponsor', {
         carId: this.car.id,
@@ -72,6 +75,8 @@ export default {
       }).then(() => {
         this.$refs.form.reset();
         this.dialog = false;
+      }).then(() => {
+        this.setSnack(`Sponsor added for ${this.car.name}`);
       });
     },
     reset() {

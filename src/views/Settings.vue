@@ -101,26 +101,11 @@
           </v-dialog>
         </v-flex>
     </v-layout>
-    <v-snackbar
-      v-model="snackbar"
-      top
-      color="success"
-      timeout="3000"
-    >
-      {{ snackbarMessage }}
-      <v-btn
-        dark
-        text
-        @click="snackbar = false"
-      >
-        Close
-      </v-btn>
-    </v-snackbar>
   </v-container>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'Settings',
@@ -128,8 +113,6 @@ export default {
     return {
       resetDialog: false,
       valid: false,
-      snackbar: false,
-      snackbarMessage: '',
       sponsorshipRules: [
         v => !!v || 'Please enter the cost of a sponsorship'
       ],
@@ -144,13 +127,15 @@ export default {
   computed: {
     ...mapState([
       'settings'
-    ])
+    ]),
   },
   methods: {
+    ...mapMutations([
+      'setSnack'
+    ]),
     saveSettings: function() {
       this.$store.dispatch('saveSettings', this.settings).then(() => {
-        this.snackbarMessage = 'Settings saved.';
-        this.snackbar = true;
+        this.setSnack('Settings saved');
       });
     },
     validate() {
@@ -165,8 +150,7 @@ export default {
           this.resetDialog = false;
         })
         .then(() => {
-          this.snackbarMessage = 'Reset successfully.';
-          this.snackbar = true;
+          this.setSnack('Reset successfully');
         });
     },
   },

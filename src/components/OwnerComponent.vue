@@ -33,11 +33,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
   props: {
     carId: String,
+    carName: String,
     owner: Object,
   },
   data: function() {
@@ -48,9 +49,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'deleteOwner',
+    ...mapMutations([
+      'setSnack'
     ]),
+    deleteOwner(id) {
+      this.$store.dispatch('deleteOwner', id)
+        .then(() => {
+          this.setSnack(`Owner bid deleted from ${this.carName}`);
+        }
+      );
+    }
   },
   computed: {
     minimumBid: function() {

@@ -59,15 +59,18 @@
         </v-layout>
       </v-container>
     </v-footer>
+    <snack-bar />
   </v-app>
 </template>
 
 <script>
+import SnackBar from '@/components/SnackBar';
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'App',
   components: {
+    SnackBar,
   },
   data: () => ({
     drawer: null,

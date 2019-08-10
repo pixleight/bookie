@@ -30,11 +30,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   props: {
     carId: String,
+    carName: String,
     sponsors: Array,
   },
   data: function() {
@@ -45,6 +46,16 @@ export default {
     ...mapActions([
       'deleteSponsor',
     ]),
+    ...mapMutations([
+      'setSnack'
+    ]),
+    deleteSponsor(id) {
+      this.$store.dispatch('deleteSponsor', id)
+        .then(() => {
+          this.setSnack(`Sponsor deleted from ${this.carName}`);
+        }
+      );
+    }
   }
 }
 </script>

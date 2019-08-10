@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 const initialState = () => {
   return {
+    snack: '',
     sponsorsPot: 0,
     cars: [
       {
@@ -38,8 +39,8 @@ const initialState = () => {
     sponsors: [],
     owners: [],
     settings: {
-      sponsorship: 5,
-      minimumBid: 5,
+      sponsorship: 3,
+      minimumBid: 10,
       cuts: {
         sponsor: 50,
         owner: 25,
@@ -146,6 +147,9 @@ export default new Vuex.Store({
       Object.keys(s).forEach(key => {
         state[key] = s[key]
       });
+    },
+    setSnack (state, snack) {
+      state.snack = snack
     },
   },
   actions: {
