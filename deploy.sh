@@ -6,8 +6,6 @@ set -e
 # build
 npm run build
 
-cp CNAME dist/
-
 # navigate into the build output directory
 cd dist
 
