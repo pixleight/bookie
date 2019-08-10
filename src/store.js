@@ -6,8 +6,8 @@ import { uuid } from 'vue-uuid';
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
+const initialState = () => {
+  return {
     sponsorsPot: 0,
     cars: [
       {
@@ -46,7 +46,11 @@ export default new Vuex.Store({
         charity: 25,
       }
     }
-  },
+  }
+} 
+
+export default new Vuex.Store({
+  state: initialState,
   getters: {
     getSponsorsById: (state) => (id) => {
       return state.sponsors.find(sponsor => sponsor.id === id)
@@ -135,7 +139,14 @@ export default new Vuex.Store({
     },
     increaseSponsorsPot (state) {
       state.sponsorsPot += state.settings.sponsorship;
-    }
+    },
+    resetApp (state) {
+      // acquire initial state
+      const s = initialState();
+      Object.keys(s).forEach(key => {
+        state[key] = s[key]
+      });
+    },
   },
   actions: {
     async addCar ({ commit }, payload) {
@@ -162,7 +173,15 @@ export default new Vuex.Store({
     async saveSettings({ commit }, payload) {
       commit('saveSettings', payload);
       return Promise.resolve();
-    }
+    },
+    resetApp ({commit}) {
+      return new Promise((resolve) => {
+        commit('resetApp');
+        resolve();
+      })
+    },
   },
-  plugins: [new VuexPersistence().plugin]
+  plugins: [new VuexPersistence({
+    key: 'bookie',
+  }).plugin]
 })

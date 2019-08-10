@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="600">
+  <v-dialog v-model="dialog" max-width="600">
     <template v-slot:activator="{ on }">
       <v-btn text color="green" dark small v-on="on">
         <v-icon left>add</v-icon> Owner

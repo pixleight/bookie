@@ -29,14 +29,6 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Katahdin 500</v-toolbar-title>
-      <v-spacer />
-      <v-toolbar-items>
-        <v-btn text tag="div"><strong>Shriners:</strong> {{ getCut('charity') | money }}</v-btn>
-        <v-divider vertical />
-        <v-btn text tag="div"><strong>Winning Owner:</strong> {{ getCut('owner') | money }}</v-btn>
-        <v-divider vertical />
-        <v-btn text tag="div"><strong>Total:</strong> {{ getTotalPot | money }}</v-btn>
-      </v-toolbar-items>
     </v-app-bar>
 
     <v-content>
@@ -49,9 +41,23 @@
     </v-content>
     <v-footer
       color="indigo darken-4"
+      dark
       app
+      paddless
     >
-      <span class="white--text">&copy; 2019</span>
+      <v-container fluid grid-list-lg>
+        <v-layout justify-space-around>
+          <v-flex shrink>
+            <span><strong>Shriners:</strong> {{ getCut('charity') | money }}</span>
+          </v-flex>
+          <v-flex shrink>
+            <span><strong>Winning Owner:</strong> {{ getCut('owner') | money }}</span>
+          </v-flex>
+          <v-flex shrink>
+            <span><strong>Total:</strong> {{ getTotalPot | money }}</span>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-footer>
   </v-app>
 </template>

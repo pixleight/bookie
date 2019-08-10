@@ -12,7 +12,7 @@
                   <v-layout wrap>
                     <v-flex xs6>
                       <v-text-field
-                        v-model.number="localSettings.sponsorship"
+                        v-model.number="settings.sponsorship"
                         label="Sponsorship"
                         type="number"
                         prefix="$"
@@ -23,7 +23,7 @@
                     </v-flex>
                     <v-flex xs6>
                       <v-text-field
-                        v-model.number="localSettings.minimumBid"
+                        v-model.number="settings.minimumBid"
                         label="Minimum Bid"
                         type="number"
                         prefix="$"
@@ -35,7 +35,7 @@
 
                     <v-flex xs4>
                       <v-text-field
-                        v-model.number="localSettings.cuts.sponsor"
+                        v-model.number="settings.cuts.sponsor"
                         label="Sponsor Cut"
                         type="number"
                         suffix="%"
@@ -48,7 +48,7 @@
                     </v-flex>
                     <v-flex xs4>
                       <v-text-field
-                        v-model.number="localSettings.cuts.owner"
+                        v-model.number="settings.cuts.owner"
                         label="Owner Cut"
                         type="number"
                         suffix="%"
@@ -61,7 +61,7 @@
                     </v-flex>
                     <v-flex xs4>
                       <v-text-field
-                        v-model.number="localSettings.cuts.charity"
+                        v-model.number="settings.cuts.charity"
                         label="Shriners Cut"
                         type="number"
                         suffix="%"
@@ -77,14 +77,45 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn :disabled="!valid" color="success" @click="addOwner">
+                <v-btn :disabled="!valid" color="success" @click="saveSettings">
                   Save Settings
                 </v-btn>
               </v-card-actions>
             </v-form>
           </v-card>
         </v-flex>
+        <v-flex>
+          <v-dialog v-model="resetDialog" persistent max-width="600">
+            <template v-slot:activator="{ on }">
+              <v-btn block color="red darken-2" dark v-on="on">Reset App</v-btn>
+            </template>
+            <v-card>
+              <v-card-title class="headline">Reset?</v-card-title>
+              <v-card-text>Are you sure you would like to remove all the bids and reset the app to its initial state?</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="grey darken-1" text @click="resetDialog = false">Cancel</v-btn>
+                <v-btn color="red darken-1" text @click="resetApp">Reset</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-flex>
     </v-layout>
+    <v-snackbar
+      v-model="snackbar"
+      top
+      color="success"
+      timeout="3000"
+    >
+      {{ snackbarMessage }}
+      <v-btn
+        dark
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -95,8 +126,10 @@ export default {
   name: 'Settings',
   data: function() {
     return {
-      localSettings: this.$store.state.settings,
+      resetDialog: false,
       valid: false,
+      snackbar: false,
+      snackbarMessage: '',
       sponsorshipRules: [
         v => !!v || 'Please enter the cost of a sponsorship'
       ],
@@ -104,19 +137,20 @@ export default {
         v => !!v || 'Please enter the minimum bid for ownership'
       ],
       cutsRules: [
-        v => (this.localSettings.cuts.sponsor + this.localSettings.cuts.owner + this.localSettings.cuts.charity) === 100 || 'Cuts must add up to 100%'
+        () => (this.settings.cuts.sponsor + this.settings.cuts.owner + this.settings.cuts.charity) === 100 || 'Cuts must add up to 100%'
       ],
     }
   },
   computed: {
     ...mapState([
       'settings'
-    ]),
+    ])
   },
   methods: {
     saveSettings: function() {
-      this.$store.dispatch('saveSettings', this.localSettings).then(() => {
-        this.$refs.form.reset();
+      this.$store.dispatch('saveSettings', this.settings).then(() => {
+        this.snackbarMessage = 'Settings saved.';
+        this.snackbar = true;
       });
     },
     validate() {
@@ -124,8 +158,18 @@ export default {
     },
     reset() {
       this.$refs.form.reset()
-    }
-  }
+    },
+    resetApp() {
+      this.$store.dispatch('resetApp')
+        .then(() => {
+          this.resetDialog = false;
+        })
+        .then(() => {
+          this.snackbarMessage = 'Reset successfully.';
+          this.snackbar = true;
+        });
+    },
+  },
 }
 </script>
 
